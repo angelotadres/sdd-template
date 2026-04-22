@@ -11,13 +11,21 @@ Trigger this skill at the start of every new feature. Do not write code or creat
 
 ## Steps
 
-### 1. Identify the next phase
+### 1. Prompt the user to clear context
+
+Before doing any other work, tell the user:
+
+> "Before we start, consider running `/clear` (or `/compact`) to reset the context window. Feature spec sessions work best with a clean slate — old conversation history adds noise and cost. Let me know when you're ready and I'll pick up from the roadmap."
+
+Wait for confirmation. Do not proceed until the user confirms they're ready.
+
+### 2. Identify the next phase
 
 Open `specs/roadmap.md`. Find the first phase with at least one unchecked task. That's your target.
 
 If every phase is complete, stop and tell the user — they need to add new phases before starting work.
 
-### 2. Create a branch
+### 3. Create a branch
 
 Create a git branch named `phase-N-<kebab-name>`, where N is the phase number and the kebab-name matches the roadmap title.
 
@@ -25,19 +33,27 @@ Example: Phase 2 "User Profile Page" → `phase-2-user-profile-page`.
 
 Hold onto the kebab-name. The spec folder you create in step 5 reuses it: `specs/YYYY-MM-DD-<kebab-name>/`. This keeps branch and spec folder aligned.
 
-### 3. Interview the user — exactly three questions
+### 4. Consult the constitution first
 
-Ask these three questions, in order, one at a time, before writing any file. Do not skip. Do not combine. Wait for each answer before asking the next.
+Read `specs/mission.md`, `specs/tech-stack.md`, and the target phase entry in `specs/roadmap.md`. Extract everything already stated about the three spec dimensions:
 
-1. **Scope** — "What does this feature collect, expose, or accomplish? What's explicitly out of scope?"
-2. **Decisions** — "What choices should I know about? Storage, visibility, validation, UX patterns, libraries?"
-3. **Context** — "What constraints or non-functional considerations shape this? Tone, performance, accessibility, existing code patterns to follow?"
+- **Scope** — what the phase's goal and task list imply; what mission.md says is in/out of scope.
+- **Decisions** — stack choices, libraries, patterns, and data model details from tech-stack.md.
+- **Context** — constraints, tone, non-functional requirements, and philosophy from mission.md.
 
-### 4. Consult the constitution
+If anything the user said (or the roadmap implies) conflicts with the constitution, surface the conflict explicitly before proceeding — don't silently resolve it.
 
-Read `specs/mission.md` and `specs/tech-stack.md`. The spec you're about to write must be consistent with them. If anything the user said conflicts, surface the conflict and ask how to resolve it — don't silently rewrite the constitution to match.
+### 5. Fill gaps with the user — only what's missing
 
-### 5. Generate the spec trio
+Present a concise pre-filled summary of what you already know across all three dimensions. Then ask only about the parts that have no coverage in the constitution:
+
+- If scope is clear from the roadmap phase goal, state it and ask the user to confirm or correct — don't re-ask it as an open question.
+- If decisions are fully specified in tech-stack.md, list the relevant ones and note they're already decided — don't ask again.
+- If context is fully covered by mission.md, summarize it — don't ask.
+
+Only ask an open-ended question for a dimension when it genuinely has a gap. If all three are fully covered, skip interviewing entirely and proceed to step 5.
+
+### 6. Generate the spec trio
 
 Create `specs/YYYY-MM-DD-<feature-name>/` (date in UTC) with three files:
 
@@ -60,7 +76,7 @@ Create `specs/YYYY-MM-DD-<feature-name>/` (date in UTC) with three files:
 - **Manual walkthrough** — what to click, what to submit, what to observe.
 - **Definition of done** — explicit checklist that maps 1:1 to the `plan.md` tasks. Always include a final item: "Mark the phase checkbox in `specs/roadmap.md` as complete."
 
-### 6. Confirm with the user
+### 7. Confirm with the user
 
 Show the three files. Ask for approval or edits before implementation begins.
 

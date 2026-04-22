@@ -24,11 +24,8 @@ Do not write code before the spec exists. The ritual:
 
 1. **Find the next phase.** Open `specs/roadmap.md`. The next incomplete phase is the one to pick up.
 2. **Branch.** Create a git branch named `phase-N-<kebab-name>` matching the roadmap entry.
-3. **Interview the user — exactly three questions, asked in order, answered one at a time:**
-   - **Scope** — what this feature collects, exposes, or accomplishes.
-   - **Decisions** — storage, visibility, validation, UX patterns, any open choices.
-   - **Context** — constraints, tone, non-functional considerations, patterns to follow.
-4. **Consult the constitution.** Read `specs/mission.md` and `specs/tech-stack.md` for calibration. Surface conflicts, don't silently resolve them.
+3. **Consult the constitution first.** Read `specs/mission.md`, `specs/tech-stack.md`, and the target phase entry in `specs/roadmap.md`. Extract everything already known about scope, decisions, and context. Surface any conflicts between them before proceeding.
+4. **Fill gaps with the user — only what the constitution doesn't already answer.** Present a pre-filled summary of what you know across the three dimensions (scope, decisions, context) and ask the user to confirm, correct, or add to it. Only ask open-ended questions for dimensions that have no coverage in the constitution docs. If all three are fully covered, skip interviewing entirely and proceed.
 5. **Generate the spec trio** in `specs/YYYY-MM-DD-<feature-name>/`:
    - `requirements.md` — scope boundaries, decision rationale, context/tone rules.
    - `plan.md` — numbered task groups, each independently implementable.

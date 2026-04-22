@@ -14,7 +14,9 @@ git config core.hooksPath .githooks
 
 ## Quick start
 
-Click **Use this template** to start a new project. Then:
+### Greenfield project
+
+Click **Use this template** on GitHub to create a new repo with this structure already in place. Then:
 
 **1. Bootstrap the constitution**
 
@@ -39,6 +41,16 @@ The `feature-spec` skill will read the initiative's roadmap, consult the constit
 ```bash
 python3 .claude/skills/changelog/scripts/changelog.py
 ```
+
+### Brownfield project
+
+To adopt this workflow in an existing repo:
+
+1. Copy the following into your project root: `AGENTS.md`, `CLAUDE.md`, `.githooks/`, `.claude/`, and the `specs/` folder (without the scaffold content — just the structure).
+2. Run `git config core.hooksPath .githooks` and `gh auth login` if needed.
+3. Run the bootstrap skill — it will interview you about your existing project and fill in the constitution based on what's already built, not what you're starting from scratch.
+
+The bootstrap skill is designed to document reality, not invent it. Point it at an existing codebase and it will produce a constitution that reflects what's there.
 
 ## What's in the box
 
@@ -93,6 +105,13 @@ See `AGENTS.md` for the full workflow.
 
 This template started from the spec-driven development workflow introduced in [DeepLearning.AI's short course on agentic development](https://github.com/https-deeplearning-ai/sc-spec-driven-development-files). The course teaches the right ideas: write specs before code, keep them in the repo, let agents read them. It introduced the constitution (mission, tech-stack, roadmap), the spec trio (requirements, plan, validation), and the backlog folder — all of which carry over here.
 
-The course is designed around building a single specific project to illustrate the concepts, not around shipping a reusable template. Taking those ideas and making them work as a general-purpose starting point for real projects required a few concrete additions. The feature-spec skill interviewed the user before reading the constitution, which meant asking questions already answered in the docs — we flipped that order. There was no bootstrap skill to automate the constitution interview, and no AGENTS.md to give agents durable, agent-agnostic instructions beyond per-video prompts. The roadmap was a single flat file, which works for one person on one track but creates merge conflicts and has no natural place for new work when a team is running multiple things in parallel — the initiative and phase structure replaces it. The backlog folder was a project-level directory not clearly scoped to research; we moved it under `specs/research/` and drew a clear line between research documents and task tracking. The changelog required manual invocation; a pre-push hook now handles it automatically.
+The course is designed around building a single specific project to illustrate the concepts, not around shipping a reusable template. Taking those ideas and making them work as a general-purpose starting point required a few concrete changes:
+
+- **Constitution-first ordering.** The original `feature-spec` skill interviewed the user before reading `mission.md` and `tech-stack.md`, which meant asking questions already answered in the docs. We flipped that order.
+- **Bootstrap skill.** There was no automated way to draft the constitution on a fresh repo — it was built manually following per-video prompts. The `bootstrap` skill automates that interview.
+- **Agent-agnostic instructions.** The course used `prompts.md` files tied to specific videos. `AGENTS.md` replaces that with durable instructions any agent can follow without knowing which video they're on.
+- **Initiative and phase structure.** The roadmap was a single flat file with a global phase queue. That works for one person on one track but creates merge conflicts and has no natural home for new work when a team runs multiple things in parallel. Per-initiative roadmaps under `specs/initiatives/` replace it.
+- **Research folder.** The `backlog/` folder sat at the project root with no clear scope. We moved it to `specs/research/` and defined it as research documents only — bugs and task ideas go to GitHub Issues instead.
+- **Changelog automation.** The changelog required manual invocation. A pre-push hook now handles it automatically.
 
 None of this diminishes the course — the conceptual foundation is sound and worth taking. This template is what you reach for when you want those concepts running on day one without the manual setup.

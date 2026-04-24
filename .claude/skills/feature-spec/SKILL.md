@@ -85,6 +85,6 @@ Show the three files. Ask for approval or edits before implementation begins.
 ## Constraints
 
 - Stay consistent with `specs/tech-stack.md`. Don't introduce new libraries or patterns without calling them out in `requirements.md` under Decisions.
-- Keep scope narrow enough to ship in one phase. If the interview reveals the phase is bigger than one session, stop and propose a roadmap edit.
+- The phase must be a **closed increment that fits one agent context window** (see `AGENTS.md` phase-sizing). During step 5, explicitly check: does the plan leave main coherent at the end? Will the spec + code + tests fit one context? If either fails, stop and propose a roadmap split — and refuse splits that create stub-then-finish pairs.
 - Three files, always. `requirements.md`, `plan.md`, `validation.md`. Same names every time.
 - Never write code or edit files outside `specs/` from within this skill.

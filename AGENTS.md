@@ -7,7 +7,7 @@ This repository follows a **spec-driven development (SDD)** workflow. Every init
 SDD organizes work into three durable layers:
 
 1. **The Constitution** (`specs/mission.md`, `specs/tech-stack.md`) — the long-lived "why and how" of the project. Edit rarely and deliberately. Changes here affect every initiative.
-2. **Initiatives** (`specs/initiatives/<initiative-name>/`) — one folder per initiative. Each contains a `roadmap.md` (the phases for that initiative) and a dated spec folder per phase (`YYYY-MM-DD-<phase-name>/` with `requirements.md`, `plan.md`, `validation.md`).
+2. **Initiatives** (`specs/initiatives/<initiative-name>/`) — one folder per initiative. Each contains a `roadmap.md` (the phases for that initiative) and a spec folder per phase (`<phase-name>/` with `requirements.md`, `plan.md`, `validation.md`). Phase order lives in `roadmap.md`, not in the folder name.
 3. **Agent skills** (`.claude/skills/`) — reusable procedures. `bootstrap` drafts the constitution and first initiative on a fresh repo; `feature-spec` kicks off new phases.
 
 Multiple initiatives can be active simultaneously — different people or agents work on different initiatives without file overlap. Within a single initiative, phases are sequential.
@@ -28,7 +28,7 @@ Do not write code before the spec exists. The ritual:
 2. **Branch.** Create a git branch named `<initiative-name>/<phase-name>` — for example, `auth-redesign/login-flow`.
 3. **Consult the constitution first.** Read `specs/mission.md`, `specs/tech-stack.md`, the initiative's `roadmap.md`, and any memos in `specs/research/` relevant to this initiative. Extract everything already known about scope, decisions, and context. Surface any conflicts before proceeding.
 4. **Fill gaps with the user — only what the constitution doesn't already answer.** Present a pre-filled summary of what you know and ask the user to confirm, correct, or add to it. Only ask open questions for dimensions that have no coverage. If all three are fully covered, skip interviewing entirely.
-5. **Generate the spec trio** in `specs/initiatives/<initiative-name>/YYYY-MM-DD-<phase-name>/`:
+5. **Generate the spec trio** in `specs/initiatives/<initiative-name>/<phase-name>/`:
    - `requirements.md` — scope boundaries, decision rationale, context/tone rules.
    - `plan.md` — numbered task groups, each independently implementable.
    - `validation.md` — automated checks (agent runs), human validation (agent cannot), and definition of done.
@@ -50,7 +50,7 @@ A phase is *done* when:
 ## Conventions
 
 - **Initiative folder names:** `<kebab-case-name>` under `specs/initiatives/`.
-- **Phase folder names:** `YYYY-MM-DD-<phase-name>` (date in UTC, kebab-case) inside the initiative folder.
+- **Phase folder names:** `<phase-name>` (kebab-case) inside the initiative folder. Matches the branch name so branch and folder stay in sync. Order lives in `roadmap.md`.
 - **Branch names:** `<initiative-name>/<phase-name>` — maps directly to the folder structure.
 - **Phase sizing:** A phase must be a **closed increment that fits the agent's context window**.
   - **Closed** — at the end of the phase, main is in a coherent state. Tests green, no dangling wires, no commented-out call sites, no "we'll finish this next phase" stubs. Infra phases count as closed when the infra is actually usable (migration runs, module exports a working API, CI stage is green) — not when it's scaffolded but dead.

@@ -52,7 +52,11 @@ A phase is *done* when:
 - **Initiative folder names:** `<kebab-case-name>` under `specs/initiatives/`.
 - **Phase folder names:** `YYYY-MM-DD-<phase-name>` (date in UTC, kebab-case) inside the initiative folder.
 - **Branch names:** `<initiative-name>/<phase-name>` — maps directly to the folder structure.
-- **Phase sizing:** Each phase should fit in one focused working session. If it doesn't, split it.
+- **Phase sizing:** A phase must be a **closed increment that fits the agent's context window**.
+  - **Closed** — at the end of the phase, main is in a coherent state. Tests green, no dangling wires, no commented-out call sites, no "we'll finish this next phase" stubs. Infra phases count as closed when the infra is actually usable (migration runs, module exports a working API, CI stage is green) — not when it's scaffolded but dead.
+  - **Fits context** — the spec trio, touched code, tests, and review can all be loaded into one agent context with headroom. "One human working session" is a rough proxy, not the real constraint.
+
+  If a phase can't meet both tests, it isn't one phase — it's multiple, and each must independently close. The work of splitting is finding real seams where both sides leave main coherent (e.g., Phase A adds a new module with a working API but no callers; Phase B migrates callers). Refuse splits where one side is a stub the other finishes — that violates closure. If no closed-at-each-step seam exists, write a research memo under `specs/research/` to find the seams, or promote the work to a new initiative.
 - **Research memos:** Investigations, comparisons, and technical memos live in `specs/research/YYYY-MM-DD-<topic>.md`. These are documents, not tasks — they inform decisions before a phase is scoped.
 - **Issue tracking:** Non-blocking bugs, polish, and small improvements go to GitHub Issues, not into specs. The threshold: if it needs a spec, it is an initiative; if it doesn't, it is an issue. When the agent notices something worth tracking, it surfaces the suggestion and waits for the user to authorize before running `gh issue create`. Before starting a new phase, the agent runs `gh issue list` to surface any open issues relevant to the current initiative.
 - **`.gitignore`:** Always kept in sync with `specs/tech-stack.md`. When the stack changes — or is first approved during bootstrap — update `.gitignore` in the same commit.

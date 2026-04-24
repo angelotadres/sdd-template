@@ -1,6 +1,6 @@
 # Initiatives
 
-One folder per initiative. Each initiative folder contains a `roadmap.md` (the phases for that initiative) and a dated spec folder per phase.
+One folder per initiative. Each initiative folder contains a `roadmap.md` (the phases for that initiative) and a spec folder per phase.
 
 ## Structure
 
@@ -8,7 +8,7 @@ One folder per initiative. Each initiative folder contains a `roadmap.md` (the p
 initiatives/
 └── initiative-name/
     ├── roadmap.md
-    └── 2026-04-22-phase-name/
+    └── phase-name/
         ├── requirements.md
         ├── plan.md
         └── validation.md
@@ -18,7 +18,7 @@ initiatives/
 
 Initiative folders use kebab-case: `auth-redesign`, `payment-flow`, `onboarding-v2`.
 
-Phase folders use `YYYY-MM-DD-<phase-name>` (date in UTC) so they sort chronologically within the initiative.
+Phase folders use `<phase-name>` (kebab-case) and match the branch name exactly. Phase order is tracked in `roadmap.md`, not in the folder name.
 
 ## Threshold
 

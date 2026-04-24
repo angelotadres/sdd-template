@@ -7,11 +7,11 @@ Investigations, comparisons, and technical memos that inform decisions before a 
 - Comparisons between possible approaches ("Postgres vs. SQLite for persistence").
 - Research on external services, libraries, or APIs under consideration.
 - Cost, performance, or compliance investigations.
-- Any writeup that will influence a future `specs/initiatives/<initiative>/YYYY-MM-DD-<phase>/requirements.md` decision.
+- Any writeup that will influence a future `specs/initiatives/<initiative>/<phase>/requirements.md` decision.
 
 ## What does not go here
 
-- Active phase specs — those live in `specs/initiatives/<initiative-name>/YYYY-MM-DD-<phase-name>/`.
+- Active phase specs — those live in `specs/initiatives/<initiative-name>/<phase-name>/`.
 - Decisions already made — those live in `specs/tech-stack.md` or `specs/mission.md`.
 - Bugs, polish, or task ideas — those go to GitHub Issues (`gh issue create`).
 

@@ -31,7 +31,7 @@ Create a git branch named `<initiative-name>/<phase-name>`, where the names are 
 
 Example: initiative "auth-redesign", phase "Login Flow" → `auth-redesign/login-flow`.
 
-Hold onto the phase kebab-name. The spec folder you create in step 6 reuses it: `specs/initiatives/<initiative-name>/YYYY-MM-DD-<phase-name>/`. This keeps branch and spec folder aligned.
+Hold onto the phase kebab-name. The spec folder you create in step 6 reuses it: `specs/initiatives/<initiative-name>/<phase-name>/`. Branch and folder names match exactly.
 
 ### 4. Consult the constitution first
 
@@ -57,7 +57,7 @@ Only ask an open-ended question for a dimension when it genuinely has a gap. If 
 
 ### 6. Generate the spec trio
 
-Create `specs/initiatives/<initiative-name>/YYYY-MM-DD-<phase-name>/` (date in UTC) with three files:
+Create `specs/initiatives/<initiative-name>/<phase-name>/` with three files:
 
 **`requirements.md`** — what is being built. Sections:
 

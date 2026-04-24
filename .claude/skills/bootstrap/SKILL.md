@@ -53,8 +53,8 @@ Only start after `tech-stack.md` is approved.
 Ask exactly three questions, one at a time:
 
 1. **Initiative name and goal** — "What is the first initiative you want to build? Give it a short name and describe its goal in one sentence."
-2. **Phase 1** — "What's the smallest thing you could ship within this initiative that shows it exists? One focused session's worth of work."
-3. **Near-term phases** — "What phases come next within this initiative, in rough order? Each phase must fit one focused session — if it needs more, split it."
+2. **Phase 1** — "What's the smallest closed increment you could ship within this initiative? At the end of Phase 1, main should be in a coherent state — the work is done, not stubbed for a later phase."
+3. **Near-term phases** — "What phases come next within this initiative, in rough order? Each phase must be a closed increment that fits one agent context window (see `AGENTS.md` phase-sizing). Refuse scaffold-only phases that defer closure to a later phase."
 
 Synthesize into `specs/initiatives/<initiative-kebab-name>/roadmap.md`. Use the following format:
 
@@ -78,7 +78,7 @@ Synthesize into `specs/initiatives/<initiative-kebab-name>/roadmap.md`. Use the 
 - [ ] <Concrete task>
 ```
 
-Enforce the one-session rule: if any phase has 10+ tasks or sounds like two sessions of work, split it before writing.
+Enforce the phase-sizing rule from `AGENTS.md`: each phase must be a closed increment that fits one agent context window. If a proposed phase can't close on its own, or is too large for one context, split it into phases that each close — refuse scaffold-then-finish pairs. If no closed-at-each-step seam exists, flag it and propose a research memo before finalizing the roadmap.
 
 Show the draft. Get approval.
 

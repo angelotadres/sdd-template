@@ -8,7 +8,7 @@ SDD organizes work into three durable layers:
 
 1. **The Constitution** (`specs/mission.md`, `specs/tech-stack.md`) — the long-lived "why and how" of the project. Edit rarely and deliberately. Changes here affect every initiative.
 2. **Initiatives** (`specs/initiatives/<initiative-name>/`) — one folder per initiative. Each contains a `roadmap.md` (the phases for that initiative) and a dated spec folder per phase (`YYYY-MM-DD-<phase-name>/` with `requirements.md`, `plan.md`, `validation.md`).
-3. **Agent skills** (`.claude/skills/`) — reusable procedures. `bootstrap` drafts the constitution and first initiative on a fresh repo; `feature-spec` kicks off new phases; `changelog` maintains `CHANGELOG.md`.
+3. **Agent skills** (`.claude/skills/`) — reusable procedures. `bootstrap` drafts the constitution and first initiative on a fresh repo; `feature-spec` kicks off new phases.
 
 Multiple initiatives can be active simultaneously — different people or agents work on different initiatives without file overlap. Within a single initiative, phases are sequential.
 
@@ -55,7 +55,6 @@ A phase is *done* when:
 - **Phase sizing:** Each phase should fit in one focused working session. If it doesn't, split it.
 - **Research memos:** Investigations, comparisons, and technical memos live in `specs/research/YYYY-MM-DD-<topic>.md`. These are documents, not tasks — they inform decisions before a phase is scoped.
 - **Issue tracking:** Non-blocking bugs, polish, and small improvements go to GitHub Issues, not into specs. The threshold: if it needs a spec, it is an initiative; if it doesn't, it is an issue. When the agent notices something worth tracking, it surfaces the suggestion and waits for the user to authorize before running `gh issue create`. Before starting a new phase, the agent runs `gh issue list` to surface any open issues relevant to the current initiative.
-- **Changelog:** `CHANGELOG.md` is regenerated automatically by the `.githooks/pre-push` hook on every push. Don't hand-edit it. To regenerate manually: `python3 .claude/skills/changelog/scripts/changelog.py`.
 - **`.gitignore`:** Always kept in sync with `specs/tech-stack.md`. When the stack changes — or is first approved during bootstrap — update `.gitignore` in the same commit.
 - **Diagrams:** Use Mermaid (fenced ` ```mermaid ` blocks) for all architecture, flow, and sequence diagrams. They render natively on GitHub and in most AI-assisted editors. Never use ASCII art diagrams.
 - **Markdown style:** Use heading levels (`#`, `##`, `###`) to divide documents into sections — never horizontal rules (`---`) for structure. No emojis unless the content explicitly calls for one. Write in plain prose; avoid bullet-point-heavy writing where paragraphs would read better.

@@ -6,12 +6,6 @@ A GitHub template for agentic projects that use **spec-driven development (SDD)*
 
 - [GitHub CLI](https://cli.github.com/) (`gh`) — required for issue tracking. Run `gh auth login` after installing.
 
-To enable automatic changelog updates on every push, run once after cloning:
-
-```bash
-git config core.hooksPath .githooks
-```
-
 ## Quick start
 
 ### Greenfield project
@@ -34,20 +28,12 @@ Start the next phase of [initiative name].
 
 The `feature-spec` skill will read the initiative's roadmap, consult the constitution, fill any gaps with you, and produce the spec trio before any code is written.
 
-**3. Changelog**
-
-`CHANGELOG.md` is regenerated automatically on every push via the `.githooks/pre-push` hook (requires the one-time setup above). To regenerate it manually at any time:
-
-```bash
-python3 .claude/skills/changelog/scripts/changelog.py
-```
-
 ### Brownfield project
 
 To adopt this workflow in an existing repo:
 
-1. Copy the following into your project root: `AGENTS.md`, `CLAUDE.md`, `.githooks/`, `.claude/`, and the `specs/` folder (without the scaffold content — just the structure).
-2. Run `git config core.hooksPath .githooks` and `gh auth login` if needed.
+1. Copy the following into your project root: `AGENTS.md`, `CLAUDE.md`, `.claude/`, and the `specs/` folder (without the scaffold content — just the structure).
+2. Run `gh auth login` if needed.
 3. Run the bootstrap skill — it will interview you about your existing project and fill in the constitution based on what's already built, not what you're starting from scratch.
 
 The bootstrap skill is designed to document reality, not invent it. Point it at an existing codebase and it will produce a constitution that reflects what's there.
@@ -59,8 +45,7 @@ The bootstrap skill is designed to document reality, not invent it. Point it at 
 - **`specs/`** — constitution files (mission, tech stack) plus `initiatives/` and `research/`.
 - **`.claude/skills/bootstrap/`** — interviews you to draft the constitution and first initiative on a fresh repo.
 - **`.claude/skills/feature-spec/`** — automates new-phase kickoff (constitution consult + spec trio generation).
-- **`.claude/skills/changelog/`** — maintains `CHANGELOG.md` from git history.
-- **`CHANGELOG.md`**, **`LICENSE`**, **`.gitignore`** — standard project hygiene.
+- **`LICENSE`**, **`.gitignore`** — standard project hygiene.
 
 ## Who this is for
 
@@ -112,6 +97,5 @@ The course is designed around building a single specific project to illustrate t
 - **Agent-agnostic instructions.** The course used `prompts.md` files tied to specific videos. `AGENTS.md` replaces that with durable instructions any agent can follow without knowing which video they're on.
 - **Initiative and phase structure.** The roadmap was a single flat file with a global phase queue. That works for one person on one track but creates merge conflicts and has no natural home for new work when a team runs multiple things in parallel. Per-initiative roadmaps under `specs/initiatives/` replace it.
 - **Research folder.** The `backlog/` folder sat at the project root with no clear scope. We moved it to `specs/research/` and defined it as research documents only — bugs and task ideas go to GitHub Issues instead.
-- **Changelog automation.** The changelog required manual invocation. A pre-push hook now handles it automatically.
 
 None of this diminishes the course — the conceptual foundation is sound and worth taking. This template is what you reach for when you want those concepts running on day one without the manual setup.

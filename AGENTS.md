@@ -62,6 +62,7 @@ A phase is *done* when:
 - **`.gitignore`:** Always kept in sync with `specs/tech-stack.md`. When the stack changes — or is first approved during bootstrap — update `.gitignore` in the same commit.
 - **Diagrams:** Use Mermaid (fenced ` ```mermaid ` blocks) for all architecture, flow, and sequence diagrams. They render natively on GitHub and in most AI-assisted editors. Never use ASCII art diagrams.
 - **Markdown style:** Use heading levels (`#`, `##`, `###`) to divide documents into sections — never horizontal rules (`---`) for structure. No emojis unless the content explicitly calls for one. Write in plain prose; avoid bullet-point-heavy writing where paragraphs would read better.
+- **Doc discipline:** `AGENTS.md` holds decision rules the agent applies while working. Background, rationale, and onboarding prose belong in `README.md`. If a new addition reads like explanation rather than a rule the agent checks, it goes in the README. Target: `AGENTS.md` stays under ~100 lines.
 
 ## Replanning
 

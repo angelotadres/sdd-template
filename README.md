@@ -2,6 +2,11 @@
 
 A GitHub template for agentic projects that use **spec-driven development (SDD)**.
 
+- **Bootstrap skill** — drafts the project's constitution (mission, tech stack, first initiative) on a fresh repo, or documents an existing one.
+- **Per-initiative roadmaps** — multiple agents (or people) can work in parallel without colliding on the constitution.
+- **Phase-sized work** — phases are closed increments that fit one agent context window; no stub-then-finish pairs.
+- **Agent-agnostic** — the workflow lives in `AGENTS.md`, so any agent or IDE that reads it (Claude Code, Cursor, Codex, etc.) works the same way.
+
 ## Prerequisites
 
 - [GitHub CLI](https://cli.github.com/) (`gh`) — required for issue tracking. Run `gh auth login` after installing.
@@ -37,6 +42,26 @@ To adopt this workflow in an existing repo:
 3. Run the bootstrap skill — it will interview you about your existing project and fill in the constitution based on what's already built, not what you're starting from scratch.
 
 The bootstrap skill is designed to document reality, not invent it. Point it at an existing codebase and it will produce a constitution that reflects what's there.
+
+## What bootstrap produces
+
+Running the `bootstrap` skill on a fresh template fills in the constitution and creates the first initiative. A typical post-bootstrap repo looks like this:
+
+```
+my-project/
+├── AGENTS.md
+├── CLAUDE.md
+├── README.md
+└── specs/
+    ├── mission.md          ← what the project does, who uses it, success criteria
+    ├── tech-stack.md       ← architecture, stack choices, interfaces, testing
+    ├── initiatives/
+    │   └── <first-initiative>/
+    │       └── roadmap.md  ← phases for this initiative
+    └── research/
+```
+
+From there, `Start the next phase of <initiative>` runs the `feature-spec` skill, which produces the spec trio (requirements, plan, validation) for the next phase before any code is written.
 
 ## What's in the box
 
@@ -88,7 +113,7 @@ See `AGENTS.md` for the full workflow.
 
 ## Motivation
 
-This template started from the spec-driven development workflow introduced in [DeepLearning.AI's short course on agentic development](https://github.com/https-deeplearning-ai/sc-spec-driven-development-files). The course teaches the right ideas: write specs before code, keep them in the repo, let agents read them. It introduced the constitution (mission, tech-stack, roadmap), the spec trio (requirements, plan, validation), and the backlog folder — all of which carry over here.
+This template started from the spec-driven development workflow introduced in [DeepLearning.AI's short course on Spec-Driven Development with Coding Agents](https://www.deeplearning.ai/short-courses/spec-driven-development-with-coding-agents/) (course materials: [https-deeplearning-ai/sc-spec-driven-development-files](https://github.com/https-deeplearning-ai/sc-spec-driven-development-files)). The course teaches the right ideas: write specs before code, keep them in the repo, let agents read them. It introduced the constitution (mission, tech-stack, roadmap), the spec trio (requirements, plan, validation), and the backlog folder — all of which carry over here.
 
 The course is designed around building a single specific project to illustrate the concepts, not around shipping a reusable template. Taking those ideas and making them work as a general-purpose starting point required a few concrete changes:
 

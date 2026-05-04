@@ -124,3 +124,7 @@ The course is designed around building a single specific project to illustrate t
 - **Research folder.** The `backlog/` folder sat at the project root with no clear scope. We moved it to `specs/research/` and defined it as research documents only — bugs and task ideas go to GitHub Issues instead.
 
 None of this diminishes the course — the conceptual foundation is sound and worth taking. This template is what you reach for when you want those concepts running on day one without the manual setup.
+
+## License
+
+MIT — see [LICENSE](LICENSE).

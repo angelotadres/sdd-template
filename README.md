@@ -70,6 +70,7 @@ From there, `Start the next phase of <initiative>` runs the `feature-spec` skill
 - **`specs/`** — constitution files (mission, tech stack) plus `initiatives/` and `research/`.
 - **`.claude/skills/bootstrap/`** — interviews you to draft the constitution and first initiative on a fresh repo.
 - **`.claude/skills/feature-spec/`** — automates new-phase kickoff (constitution consult + spec trio generation).
+- **`.claude/skills/coding-discipline/`** — behavioral guardrails applied while implementing a phase (think before coding, simplicity first, surgical changes, verifiable goals), derived from [Andrej Karpathy's observations on LLM coding pitfalls](https://x.com/karpathy/status/2015883857489522876).
 - **`LICENSE`**, **`.gitignore`** — standard project hygiene.
 
 ## Who this is for

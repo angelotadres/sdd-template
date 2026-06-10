@@ -38,6 +38,8 @@ Do not write code before the spec exists. The ritual:
 
 Work task group by task group from `plan.md`. Commit in small increments tied to task groups. When a group is done, run the checks in `validation.md`.
 
+Apply the coding discipline in `.claude/skills/coding-discipline/SKILL.md` while implementing: surface assumptions before coding, keep changes minimal and surgical, and turn each task into a verifiable check before writing it.
+
 **Validation principle:** The agent runs every automated check it can — tests, lint, type checks, CLI smoke tests — and reports the results. Only after exhausting automated validation does it ask the human to step in. The human's role is to review the agent's report, perform the checks only a human can (visual UI, business logic judgment, accessibility), and then authorize the commit or PR push. That authorization is the explicit gate.
 
 A phase is *done* when:

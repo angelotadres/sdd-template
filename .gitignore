@@ -9,6 +9,9 @@ Desktop.ini
 # Claude Code
 .claude/settings.local.json
 
+# Local lint config
+.markdownlint.jsonc
+
 # Editors / IDEs
 .idea/
 .vscode/

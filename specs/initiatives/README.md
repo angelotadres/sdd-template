@@ -4,7 +4,7 @@ One folder per initiative. Each initiative folder contains a `roadmap.md` (the p
 
 ## Structure
 
-```
+```text
 initiatives/
 └── initiative-name/
     ├── roadmap.md

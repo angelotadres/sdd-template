@@ -57,7 +57,7 @@ Only ask an open-ended question for a dimension when it genuinely has a gap. If 
 
 ### 6. Generate the spec trio
 
-Create `specs/initiatives/<initiative-name>/<phase-name>/` with three files:
+Create `specs/initiatives/<initiative-name>/<phase-name>/` with three files. Apply the spec-brevity convention in `AGENTS.md` to all three: reference the constitution instead of restating it, and keep each file short enough that the user will genuinely read every line in step 7.
 
 **`requirements.md`** — what is being built. Sections:
 
@@ -68,23 +68,26 @@ Create `specs/initiatives/<initiative-name>/<phase-name>/` with three files:
 
 **`plan.md`** — how it will be built. Sections:
 
-- Numbered task groups. Common shapes: data layer → domain logic → interface (API or UI) → tests. Adapt to the project's actual stack.
+- Numbered task groups. Common shape: data layer → domain logic → interface (API or UI). Adapt to the project's actual stack.
 - Each group contains concrete, independently implementable subtasks as checkboxes.
+- Tests live inside the group that introduces the behavior they cover — never as a trailing "tests" group. See the testing convention in `AGENTS.md`.
 - Groups should be orderable — later groups can depend on earlier ones, but not vice versa.
 
 **`validation.md`** — how we'll know it's done. Two explicit sections:
 
-- **Agent validates** — everything the agent can run or observe autonomously: automated tests, lint, type checks, CLI smoke tests, API response checks. The agent runs all of these and reports results before involving the human.
+- **Agent validates** — everything the agent can run or observe autonomously: automated tests, lint, type checks, CLI smoke tests, API response checks. The agent runs all of these and reports results before involving the human. Name the tests this phase adds or updates (per the testing convention in `AGENTS.md`); if the phase needs none, say why in one line.
 - **Human validates** — only what requires human judgment: visual UI correctness, business logic that can't be asserted programmatically, accessibility, UX feel. Keep this list short — if the agent can check it, it belongs in "Agent validates."
 - **Definition of done** — explicit checklist that maps 1:1 to the `plan.md` tasks. Always include a final item: "Mark the phase checkbox in the initiative's `roadmap.md` as complete."
 
 ### 7. Confirm with the user
 
-Show the three files. Ask for approval or edits before implementation begins.
+Show the three files. Then, separately, call out the decisions and assumptions most likely to be wrong — the ones the user must consciously confirm rather than skim past: anything you inferred without constitution backing, any new dependency or pattern, any scope judgment call. Keep this list to the genuinely risky items (typically 3–5).
+
+Ask for approval or edits before implementation begins. Approval of the risky-items list is the real gate — don't accept a bare "looks good" if the user hasn't addressed them.
 
 ## Constraints
 
 - Stay consistent with `specs/tech-stack.md`. Don't introduce new libraries or patterns without calling them out in `requirements.md` under Decisions.
-- The phase must be a **closed increment that fits one agent context window** (see `AGENTS.md` phase-sizing). During step 5, explicitly check: does the plan leave main coherent at the end? Will the spec + code + tests fit one context? If either fails, stop and propose a roadmap split — and refuse splits that create stub-then-finish pairs.
+- Enforce the phase-sizing rule in `AGENTS.md` during step 5. If the phase fails either test, stop and propose a roadmap split — and refuse splits that create stub-then-finish pairs.
 - Three files, always. `requirements.md`, `plan.md`, `validation.md`. Same names every time.
 - Never write code or edit files outside `specs/` from within this skill.

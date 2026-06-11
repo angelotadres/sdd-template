@@ -17,17 +17,17 @@ A GitHub template for agentic projects that use **spec-driven development (SDD)*
 
 Click **Use this template** on GitHub to create a new repo with this structure already in place. Then:
 
-**1. Bootstrap the constitution**
+#### 1. Bootstrap the constitution
 
-```
+```text
 Bootstrap the project. My project is about: [one sentence].
 ```
 
 The `bootstrap` skill will interview you and draft `specs/mission.md`, `specs/tech-stack.md`, and the first initiative under `specs/initiatives/` together with you.
 
-**2. Start a phase**
+#### 2. Start a phase
 
-```
+```text
 Start the next phase of [initiative name].
 ```
 
@@ -47,7 +47,7 @@ The bootstrap skill is designed to document reality, not invent it. Point it at 
 
 Running the `bootstrap` skill on a fresh template fills in the constitution and creates the first initiative. A typical post-bootstrap repo looks like this:
 
-```
+```text
 my-project/
 ├── AGENTS.md
 ├── CLAUDE.md
@@ -110,21 +110,13 @@ Before starting a new phase, the agent runs `gh issue list` to surface any open 
 
 Specs are durable; code is disposable. When the agent (or the human) changes, the specs don't. This template bakes that assumption into the repo layout so any agent can pick up where another left off.
 
+Specs here are also deliberately short. Every spec is an approval gate, and the gate only works if the human actually reads what they approve — a spec too long to read thoroughly gets rubber-stamped, which is worse than no spec at all because it creates the illusion of review. The skills enforce a brevity budget and surface the riskiest decisions explicitly at approval time, so human attention lands where it matters.
+
 See `AGENTS.md` for the full workflow.
 
-## Motivation
+## Acknowledgements
 
-This template started from the spec-driven development workflow introduced in [DeepLearning.AI's short course on Spec-Driven Development with Coding Agents](https://www.deeplearning.ai/short-courses/spec-driven-development-with-coding-agents/) (course materials: [https-deeplearning-ai/sc-spec-driven-development-files](https://github.com/https-deeplearning-ai/sc-spec-driven-development-files)). The course teaches the right ideas: write specs before code, keep them in the repo, let agents read them. It introduced the constitution (mission, tech-stack, roadmap), the spec trio (requirements, plan, validation), and the backlog folder — all of which carry over here.
-
-The course is designed around building a single specific project to illustrate the concepts, not around shipping a reusable template. Taking those ideas and making them work as a general-purpose starting point required a few concrete changes:
-
-- **Constitution-first ordering.** The original `feature-spec` skill interviewed the user before reading `mission.md` and `tech-stack.md`, which meant asking questions already answered in the docs. We flipped that order.
-- **Bootstrap skill.** There was no automated way to draft the constitution on a fresh repo — it was built manually following per-video prompts. The `bootstrap` skill automates that interview.
-- **Agent-agnostic instructions.** The course used `prompts.md` files tied to specific videos. `AGENTS.md` replaces that with durable instructions any agent can follow without knowing which video they're on.
-- **Initiative and phase structure.** The roadmap was a single flat file with a global phase queue. That works for one person on one track but creates merge conflicts and has no natural home for new work when a team runs multiple things in parallel. Per-initiative roadmaps under `specs/initiatives/` replace it.
-- **Research folder.** The `backlog/` folder sat at the project root with no clear scope. We moved it to `specs/research/` and defined it as research documents only — bugs and task ideas go to GitHub Issues instead.
-
-None of this diminishes the course — the conceptual foundation is sound and worth taking. This template is what you reach for when you want those concepts running on day one without the manual setup.
+The conceptual core of this workflow — write specs before code, keep them in the repo, organize them as a constitution plus a per-phase spec trio — comes from [DeepLearning.AI's short course on Spec-Driven Development with Coding Agents](https://www.deeplearning.ai/short-courses/spec-driven-development-with-coding-agents/). This template builds on those ideas and adds what a reusable starting point needs: the bootstrap skill, per-initiative roadmaps, phase-sizing and closure rules, agent-agnostic instructions, and the brevity, testing, and coding-discipline conventions.
 
 ## License
 

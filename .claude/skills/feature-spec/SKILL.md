@@ -27,7 +27,7 @@ If every phase in the initiative is complete, stop and tell the user — they ne
 
 ### 3. Create a branch
 
-Create a git branch named `<initiative-name>/<phase-name>`, where the names are kebab-case and match the initiative folder and phase goal.
+First ensure the working tree is clean — commit or stash any pending changes before branching, per the branch-from-a-clean-tree rule in `AGENTS.md`. Then create a git branch named `<initiative-name>/<phase-name>`, where the names are kebab-case and match the initiative folder and phase goal.
 
 Example: initiative "auth-redesign", phase "Login Flow" → `auth-redesign/login-flow`.
 

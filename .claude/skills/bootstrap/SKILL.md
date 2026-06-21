@@ -1,6 +1,6 @@
 ---
 name: bootstrap
-description: Interviews the user to draft the project constitution — mission.md, tech-stack.md, and the first initiative — in that order. Trigger on a fresh clone of the template when the user says things like "bootstrap the project", "set up the constitution", "fill in mission/tech-stack", "this is a fresh repo — let's start", "help me write the mission", or asks for help writing any of the constitution docs. Can target one doc at a time or run all three back-to-back.
+description: Interviews the user to draft the project constitution — mission.md, tech-stack.md, and the first initiative — then sets the license, rewrites the README for the new project, and suggests an initial commit. Trigger on a fresh clone of the template when the user says things like "bootstrap the project", "set up the constitution", "fill in mission/tech-stack", "this is a fresh repo — let's start", "help me write the mission", or asks for help writing any of the constitution docs. Can target one doc at a time or run all three back-to-back.
 ---
 
 # Bootstrap Skill
@@ -84,10 +84,31 @@ Show the draft. Get approval.
 
 ## Finish
 
-Once all three parts are approved:
+Once all three parts are approved, wrap up the repo before any phase work:
 
-- Confirm the constitution and first initiative are in place.
-- Tell the user the next step: start the first phase by saying something like *"start the next phase of [initiative name]"* — which will invoke the `feature-spec` skill.
+1. **License.** Ask the user which license the project should use — don't assume MIT. Offer the common choices (MIT, Apache-2.0, BSD-3-Clause, GPL-3.0, proprietary/none) and accept any other. Replace `LICENSE` with the chosen license's text, using the user's name and the current year as the copyright holder. If they choose proprietary/none, delete `LICENSE` and drop the License section from the README.
+2. **README.** The template ships a `README.md` describing the *template itself* — it's stale the moment a real project exists. Replace it with a short project README: a one-paragraph intro (what this is, who it's for) plus pointers to the durable sources of truth. Do **not** restate mission or tech-stack content — link to it, so each fact lives in one place. Apply the spec-brevity convention in `AGENTS.md` to the README too. Use this skeleton:
+
+   ```markdown
+   # <Project Name>
+
+   <One paragraph: what the project is and who it's for. No feature lists — those live in mission.md.>
+
+   ## Documentation
+
+   This project uses spec-driven development. Durable sources of truth:
+
+   - `specs/mission.md` — what we're building and why.
+   - `specs/tech-stack.md` — how we're building it.
+   - `AGENTS.md` — the workflow agents follow.
+
+   ## License
+
+   <License name> — see [LICENSE](LICENSE).
+   ```
+
+3. **Commit.** Suggest committing the bootstrapped constitution, README, and LICENSE now, so the first phase branches from a clean, known-good main (the clean-working-tree precondition in `AGENTS.md`). Propose the commit and let the user authorize it.
+4. Confirm the constitution and first initiative are in place, then tell the user the next step: start the first phase by saying something like *"start the next phase of [initiative name]"* — which will invoke the `feature-spec` skill.
 
 ## Constraints
 
@@ -96,5 +117,5 @@ Once all three parts are approved:
 - Remove the HTML-comment guidance from sections you fill in — it served its purpose.
 - Write specifically. Abstract constitution docs are useless to agents.
 - Write briefly. Every draft must be short enough for the user to read fully before approving — apply the spec-brevity convention in `AGENTS.md`. An approval of an unread draft is worthless.
-- Only edit `specs/` files and `.gitignore`. Don't touch any other files.
+- During the three interview parts, only edit `specs/` files and `.gitignore`. The `LICENSE` and `README.md` are touched only in the Finish step, after the constitution is approved.
 - Don't skip parts. If running all three, mission → tech-stack → first initiative in that order. If one fails approval, stop there.

@@ -18,14 +18,14 @@ The pattern is deliberately agent-agnostic. Claude Code picks up `.claude/skills
 
 If the constitution files (`specs/mission.md`, `specs/tech-stack.md`) are still the stock scaffolds — only HTML comments and section headers, no real content — the repo has just been cloned from the template. Before any other work, invoke the `bootstrap` skill to draft them together with the user, even if the user hasn't asked for it by name.
 
-The bootstrap skill runs a three-part interview (mission → tech-stack → first initiative) and produces the filled-in constitution plus the first initiative folder. Only after all three are approved does the workflow below apply.
+The bootstrap skill runs a three-part interview (mission → tech-stack → first initiative) and produces the filled-in constitution plus the first initiative folder. It then sets the project's license (asking which — it does not default to MIT), rewrites the template `README.md` into a short project README that points at the constitution, and suggests committing before any phase begins. Only after all three are approved does the workflow below apply.
 
 ## Starting a new phase
 
 Do not write code before the spec exists. The ritual:
 
 1. **Identify the initiative.** Ask the user which initiative they are working on. Read `specs/initiatives/<initiative-name>/roadmap.md` to find the first incomplete phase. That is the target.
-2. **Branch.** Create a git branch named `<initiative-name>/<phase-name>` — for example, `auth-redesign/login-flow`.
+2. **Branch from a clean tree.** A phase starts from a known-good main, so commit or stash any pending changes first — never branch on top of uncommitted work. Then create a git branch named `<initiative-name>/<phase-name>` — for example, `auth-redesign/login-flow`.
 3. **Consult the constitution first.** Read `specs/mission.md`, `specs/tech-stack.md`, the initiative's `roadmap.md`, and any memos in `specs/research/` relevant to this initiative. Extract everything already known about scope, decisions, and context. Surface any conflicts before proceeding.
 4. **Fill gaps with the user — only what the constitution doesn't already answer.** Present a pre-filled summary of what you know and ask the user to confirm, correct, or add to it. Only ask open questions for dimensions that have no coverage. If all three are fully covered, skip interviewing entirely.
 5. **Generate the spec trio** in `specs/initiatives/<initiative-name>/<phase-name>/`:
@@ -66,7 +66,7 @@ A phase is *done* when:
 - **`.gitignore`:** Always kept in sync with `specs/tech-stack.md`. When the stack changes — or is first approved during bootstrap — update `.gitignore` in the same commit.
 - **Diagrams:** Use Mermaid (fenced ` ```mermaid ` blocks) for all architecture, flow, and sequence diagrams. They render natively on GitHub and in most AI-assisted editors. Never use ASCII art diagrams.
 - **Markdown style:** Use heading levels (`#`, `##`, `###`) to divide documents into sections — never horizontal rules (`---`) for structure. No emojis unless the content explicitly calls for one. Write in plain prose; avoid bullet-point-heavy writing where paragraphs would read better.
-- **Doc discipline:** `AGENTS.md` holds decision rules the agent applies while working. Background, rationale, and onboarding prose belong in `README.md`. If a new addition reads like explanation rather than a rule the agent checks, it goes in the README. Target: `AGENTS.md` stays under ~100 lines.
+- **Doc discipline:** `AGENTS.md` holds decision rules the agent applies while working. Background, rationale, and onboarding prose belong in `README.md`. If a new addition reads like explanation rather than a rule the agent checks, it goes in the README. Target: `AGENTS.md` stays under ~100 lines. The `README.md` follows the same brevity bar as specs — a short, pragmatic narrative, not a wall of text — and it links to the constitution rather than restating it, per the single-source-of-truth rule below.
 - **Single source of truth:** Every rule lives in exactly one place — usually this file. Skills and other docs reference a rule by name with a pointer (e.g. "the phase-sizing rule in `AGENTS.md`") instead of restating it. Finding the same rule written out twice is a bug: consolidate and point.
 
 ## Replanning

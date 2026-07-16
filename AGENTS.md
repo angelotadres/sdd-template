@@ -20,21 +20,56 @@ If the constitution files (`specs/mission.md`, `specs/tech-stack.md`) are still 
 
 The bootstrap skill runs a three-part interview (mission → tech-stack → first initiative) and produces the filled-in constitution plus the first initiative folder. It then sets the project's license (asking which — it does not default to MIT), rewrites the template `README.md` into a short project README that points at the constitution, and suggests committing before any phase begins. Only after all three are approved does the workflow below apply.
 
+## Sizing the work: the two-way-door test
+
+Before starting a phase, classify it. The ceremony scales with the cost of being wrong.
+
+- **Two-way door** — reversible, low blast radius. Takes the **light path**: no spec trio, just build it and leave a breadcrumb. This is the default and where most work lives.
+- **One-way door** — costly or impossible to reverse. Takes the **escalated path**: the full spec trio and approval gate before code.
+
+Judge by blast radius, not by whether git can undo the commit. A migration that has already run against real data, an API other people now depend on, a deleted record — git reverts the code, not the consequence.
+
+**Escalate when any of these fire:**
+
+- Changes the constitution (`specs/mission.md` or `specs/tech-stack.md`).
+- Any schema or data migration — judged by shape, not by which database is in front of you. The artifact is reversible on a branch; its eventual application against real data is not.
+- Auth, permissions, payments, or anything security-sensitive.
+- A public API surface others will depend on.
+- An irreversible external side effect: deleting data or resources, sending email/notifications/posts, calling a paid or rate-limited API, or starting new data collection.
+- Any other change that produces an effect outside this branch that a `git revert` would not undo.
+- Won't fit one agent context window (the phase-sizing rule below).
+
+**Otherwise, go light** — escalate only when you can name a trigger. State the call in one line at kickoff ("Reversible, internal-only — going light. Say 'spec it' to escalate.") and proceed unless the user redirects; one word forces either direction. That one-line call is the gate, not a wall of spec files.
+
 ## Starting a new phase
 
-Do not write code before the spec exists. The ritual:
+Identify the initiative first: ask the user which one, then read `specs/initiatives/<initiative-name>/roadmap.md` to find the first incomplete phase. Run the two-way-door test on it, state your recommendation, and take the matching path.
 
-1. **Identify the initiative.** Ask the user which initiative they are working on. Read `specs/initiatives/<initiative-name>/roadmap.md` to find the first incomplete phase. That is the target.
-2. **Branch from a clean tree.** A phase starts from a known-good main, so commit or stash any pending changes first — never branch on top of uncommitted work. Then create a git branch named `<initiative-name>/<phase-name>` — for example, `auth-redesign/login-flow`.
-3. **Consult the constitution first.** Read `specs/mission.md`, `specs/tech-stack.md`, the initiative's `roadmap.md`, and any memos in `specs/research/` relevant to this initiative. Extract everything already known about scope, decisions, and context. Surface any conflicts before proceeding.
-4. **Fill gaps with the user — only what the constitution doesn't already answer.** Present a pre-filled summary of what you know and ask the user to confirm, correct, or add to it. Only ask open questions for dimensions that have no coverage. If all three are fully covered, skip interviewing entirely.
-5. **Generate the spec trio** in `specs/initiatives/<initiative-name>/<phase-name>/`:
+### Light path (two-way door)
+
+1. **Branch from a clean tree.** Commit or stash pending changes, then branch `<initiative-name>/<phase-name>`.
+2. **Record intent.** On the branch, add a couple of bullets under the phase in the initiative's `roadmap.md` — what and why. This is the whole spec: no trio.
+3. **Build.** Apply the coding discipline in `.claude/skills/coding-discipline/SKILL.md`. Implement in small commits and add tests where behavior changes (see the testing convention below). No spec-approval gate — the door-test call already was it, with two standing exceptions:
+   - **Re-classify if the door changes.** If a one-way-door trigger surfaces mid-build (a migration, a delete, a public surface), stop *before* the irreversible step and escalate the remaining work.
+   - **Confirm irreversible side effects.** Before executing an irreversible external side effect (deleting data or resources, sending messages, calling a paid API, running a migration against real data), get an explicit go from the user — silence is not consent. Pure source changes on the branch need no such confirm.
+4. **Land it.** Open a PR, or solo, fast-forward `main`. Then check the phase off in `roadmap.md`.
+
+### Escalated path (one-way door)
+
+Do not write code before the spec trio exists. The ritual:
+
+1. **Branch from a clean tree.** A phase starts from a known-good main, so commit or stash any pending changes first — never branch on top of uncommitted work. Then create a git branch named `<initiative-name>/<phase-name>` — for example, `auth-redesign/login-flow`.
+2. **Consult the constitution first.** Read `specs/mission.md`, `specs/tech-stack.md`, the initiative's `roadmap.md`, and any memos in `specs/research/` relevant to this initiative. Extract everything already known about scope, decisions, and context. Surface any conflicts before proceeding.
+3. **Fill gaps with the user — only what the constitution doesn't already answer.** Present a pre-filled summary of what you know and ask the user to confirm, correct, or add to it. Only ask open questions for dimensions that have no coverage. If all three are fully covered, skip interviewing entirely.
+4. **Generate the spec trio** in `specs/initiatives/<initiative-name>/<phase-name>/`:
    - `requirements.md` — scope boundaries, decision rationale, context/tone rules.
    - `plan.md` — numbered task groups, each independently implementable.
    - `validation.md` — automated checks (agent runs), human validation (agent cannot), and definition of done.
-6. **Show the user.** Get approval before coding.
+5. **Show the user.** Get approval before coding.
 
 ## Implementing a phase
+
+This section applies to the **escalated path**. On the light path there is no `plan.md` or `validation.md` — build from the roadmap bullets, apply the coding discipline, and lean on the validation principle below at whatever depth the change warrants.
 
 Work task group by task group from `plan.md`. Commit in small increments tied to task groups. When a group is done, run the checks in `validation.md`.
 
@@ -42,12 +77,15 @@ Apply the coding discipline in `.claude/skills/coding-discipline/SKILL.md` while
 
 **Validation principle:** The agent runs every automated check it can — tests, lint, type checks, CLI smoke tests — and reports the results. Only after exhausting automated validation does it ask the human to step in. The human's role is to review the agent's report, perform the checks only a human can (visual UI, business logic judgment, accessibility), and then authorize the commit or PR push. That authorization is the explicit gate.
 
-A phase is *done* when:
+An **escalated** phase is *done* when:
 
 - Every task in `plan.md` is checked off.
 - Every automated check in `validation.md` passes.
 - The human walkthrough in `validation.md` has been performed and authorized.
+- The work is landed on `main` (PR merged, or solo fast-forward).
 - The phase checkbox in the initiative's `roadmap.md` is checked off.
+
+A **light** phase is *done* when the change works, any behavior it changed ships with passing tests, the work is landed on `main` (PR merged, or solo fast-forward), and the phase checkbox in `roadmap.md` is checked off.
 
 ## Conventions
 
@@ -66,7 +104,7 @@ A phase is *done* when:
 - **`.gitignore`:** Always kept in sync with `specs/tech-stack.md`. When the stack changes — or is first approved during bootstrap — update `.gitignore` in the same commit.
 - **Diagrams:** Use Mermaid (fenced ` ```mermaid ` blocks) for all architecture, flow, and sequence diagrams. They render natively on GitHub and in most AI-assisted editors. Never use ASCII art diagrams.
 - **Markdown style:** Use heading levels (`#`, `##`, `###`) to divide documents into sections — never horizontal rules (`---`) for structure. No emojis unless the content explicitly calls for one. Write in plain prose; avoid bullet-point-heavy writing where paragraphs would read better.
-- **Doc discipline:** `AGENTS.md` holds decision rules the agent applies while working. Background, rationale, and onboarding prose belong in `README.md`. If a new addition reads like explanation rather than a rule the agent checks, it goes in the README. Target: `AGENTS.md` stays under ~100 lines. The `README.md` follows the same brevity bar as specs — a short, pragmatic narrative, not a wall of text — and it links to the constitution rather than restating it, per the single-source-of-truth rule below.
+- **Doc discipline:** `AGENTS.md` holds decision rules the agent applies while working. Background, rationale, and onboarding prose belong in `README.md`. If a new addition reads like explanation rather than a rule the agent checks, it goes in the README. Target: `AGENTS.md` stays under ~120 lines. The `README.md` follows the same brevity bar as specs — a short, pragmatic narrative, not a wall of text — and it links to the constitution rather than restating it, per the single-source-of-truth rule below.
 - **Single source of truth:** Every rule lives in exactly one place — usually this file. Skills and other docs reference a rule by name with a pointer (e.g. "the phase-sizing rule in `AGENTS.md`") instead of restating it. Finding the same rule written out twice is a bug: consolidate and point.
 
 ## Replanning

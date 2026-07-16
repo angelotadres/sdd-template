@@ -1,9 +1,10 @@
 # Agentic Project Template
 
-A GitHub template for agentic projects that use **spec-driven development (SDD)**.
+A GitHub template for **developers working with agents**, built around **spec-driven development (SDD)** — kept light by default so it speeds you up instead of slowing you down.
 
+- **Light by default, escalate on risk** — most work is a two-way door: reversible, so the agent just builds it and leaves a breadcrumb. Only one-way-door changes (migrations, auth, public APIs, constitution edits) get the full spec trio. Ceremony scales with the cost of being wrong.
 - **Bootstrap skill** — drafts the project's constitution (mission, tech stack, first initiative) on a fresh repo, or documents an existing one.
-- **Per-initiative roadmaps** — multiple agents (or people) can work in parallel without colliding on the constitution.
+- **Per-initiative roadmaps** — multiple people, each driving their own agent, can work in parallel without colliding on the constitution.
 - **Phase-sized work** — phases are closed increments that fit one agent context window; no stub-then-finish pairs.
 - **Agent-agnostic** — the workflow lives in `AGENTS.md`, so any agent or IDE that reads it (Claude Code, Cursor, Codex, etc.) works the same way.
 
@@ -31,7 +32,7 @@ The `bootstrap` skill will interview you and draft `specs/mission.md`, `specs/te
 Start the next phase of [initiative name].
 ```
 
-The `feature-spec` skill will read the initiative's roadmap, consult the constitution, fill any gaps with you, and produce the spec trio before any code is written.
+The `feature-spec` skill reads the initiative's roadmap and runs the **two-way-door test** to size the phase. If it's reversible, it goes light — records intent on the roadmap and builds. If it's a one-way door, it consults the constitution, fills gaps with you, and produces the spec trio before any code is written. The agent states which path in one line; one word overrides it.
 
 ### Brownfield project
 
@@ -75,7 +76,7 @@ From there, `Start the next phase of <initiative>` runs the `feature-spec` skill
 
 ## Who this is for
 
-This template is designed for a solo developer or a small team coordinating with one or more agents. The documentation is written primarily for agents to consume — humans benefit from it too, but the structure is deliberately machine-readable so agents can pick up context without being told what to read.
+This template is for developers who build with agents — one person per feature, driving an agent, whether working solo or alongside others. Nothing stops several people from sharing the repo; there's just no team-coordination machinery beyond git and PRs. The documentation is written primarily for agents to consume — humans benefit too, but the structure is deliberately machine-readable so agents can pick up context without being told what to read.
 
 It is not a team coordination tool, a project management system, or a replacement for a task tracker. It is an opinionated repo layout that keeps specs and code honest with each other.
 
@@ -110,7 +111,7 @@ Before starting a new phase, the agent runs `gh issue list` to surface any open 
 
 Specs are durable; code is disposable. When the agent (or the human) changes, the specs don't. This template bakes that assumption into the repo layout so any agent can pick up where another left off.
 
-Specs here are also deliberately short. Every spec is an approval gate, and the gate only works if the human actually reads what they approve — a spec too long to read thoroughly gets rubber-stamped, which is worse than no spec at all because it creates the illusion of review. The skills enforce a brevity budget and surface the riskiest decisions explicitly at approval time, so human attention lands where it matters.
+Specs here are also deliberately short — and deliberately rare. Every spec is an approval gate, and the gate only works if the human actually reads what they approve; a spec too long to read thoroughly gets rubber-stamped, which is worse than no spec at all because it creates the illusion of review. So the template writes a full spec only for one-way-door work, where the record earns its keep. Reversible work skips the trio entirely and leaves a one-line breadcrumb on the roadmap. The skills enforce a brevity budget and surface the riskiest decisions explicitly at approval time, so human attention lands where it matters.
 
 See `AGENTS.md` for the full workflow.
 

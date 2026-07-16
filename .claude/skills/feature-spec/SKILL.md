@@ -23,9 +23,9 @@ Then take the matching path below.
 
 ## Light path (two-way door)
 
-1. **Record intent.** Add a couple of bullets under the phase in the initiative's `roadmap.md` — what and why. That is the whole spec; no trio, no separate file.
-2. **Branch from a clean tree.** Commit or stash pending changes first (the clean-tree rule in `AGENTS.md`), then create `<initiative-name>/<phase-name>`.
-3. **Hand off to implementation.** Build per the "Implementing a phase" and coding-discipline guidance in `AGENTS.md`. There is no spec-approval gate — the door-test call already was it. Stop here; this skill is done.
+1. **Branch from a clean tree.** Commit or stash pending changes first (the clean-tree rule in `AGENTS.md`), then create `<initiative-name>/<phase-name>`.
+2. **Record intent.** On the branch, add a couple of bullets under the phase in the initiative's `roadmap.md` — what and why. That is the whole spec; no trio, no separate file.
+3. **Hand off to build.** Follow the Light path in `AGENTS.md`: apply the coding discipline, re-classify and escalate if a one-way-door trigger surfaces mid-build, and get explicit confirmation before any irreversible external side effect. There is no spec-approval gate otherwise. Stop here; this skill is done.
 
 ## Escalated path (one-way door)
 

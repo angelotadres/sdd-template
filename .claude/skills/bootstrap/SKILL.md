@@ -20,7 +20,7 @@ Check the current state of each target file:
 
 ## Part 1 — Mission
 
-Ask exactly three questions, one at a time, waiting for each answer before the next:
+Ask these three questions together; follow up only if an answer is thin:
 
 1. **Purpose & users** — "In one or two paragraphs: what does this project do, who uses it, and what problem does it solve?"
 2. **Capabilities & success** — "What are the top 3–7 things the system must do, and how will you know it's working? Prefer measurable criteria."
@@ -32,9 +32,7 @@ Show the draft. Get explicit approval before moving on.
 
 ## Part 2 — Tech Stack
 
-Only start after `mission.md` is approved.
-
-Ask exactly three questions, one at a time:
+Only start after `mission.md` is approved. Ask these three questions together:
 
 1. **Architecture** — "What's the high-level architecture? Major components and how they talk to each other."
 2. **Choices & rationale** — "Language, framework, database, key libraries — each with a one-line reason."
@@ -48,9 +46,7 @@ Show the draft. Get approval.
 
 ## Part 3 — First Initiative
 
-Only start after `tech-stack.md` is approved.
-
-Ask exactly three questions, one at a time:
+Only start after `tech-stack.md` is approved. Ask these three questions together:
 
 1. **Initiative name and goal** — "What is the first initiative you want to build? Give it a short name and describe its goal in one sentence."
 2. **Phase 1** — "What's the smallest closed increment you could ship within this initiative? At the end of Phase 1, main should be in a coherent state — the work is done, not stubbed for a later phase."
@@ -112,7 +108,7 @@ Once all three parts are approved, wrap up the repo before any phase work:
 
 ## Constraints
 
-- Three questions per part, always. No mechanical question lists — each question is a macro prompt that invites a rich answer. If an answer is thin, ask a follow-up before moving on.
+- Three questions per part, asked together — each is a macro prompt that invites a rich answer, not a mechanical checklist. Follow up only when an answer is thin. Don't drag a one-time setup out into nine separate turns.
 - Preserve the scaffold's section structure for constitution docs. Don't invent new top-level sections.
 - Remove the HTML-comment guidance from sections you fill in — it served its purpose.
 - Write specifically. Abstract constitution docs are useless to agents.

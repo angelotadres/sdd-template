@@ -12,11 +12,11 @@ SDD organizes work into three durable layers:
 
 Multiple initiatives can be active simultaneously — different people or agents work on different initiatives without file overlap. Within a single initiative, phases are sequential.
 
-The pattern is deliberately agent-agnostic. Claude Code picks up `.claude/skills/` natively; other agents can read this file and follow the workflow manually.
+The pattern is deliberately agent-agnostic. Claude Code picks up `.claude/skills/` natively; other agents can read this file and follow the workflow manually — and can read the skill files under `.claude/skills/` directly, since each is a plain step-by-step procedure, not Claude-specific automation.
 
 ## Starting a new project
 
-If the constitution files (`specs/mission.md`, `specs/tech-stack.md`) are still the stock scaffolds — only HTML comments and section headers, no real content — the repo has just been cloned from the template. Before any other work, invoke the `bootstrap` skill to draft them together with the user, even if the user hasn't asked for it by name.
+If the constitution files (`specs/mission.md`, `specs/tech-stack.md`) are still the stock scaffolds — only HTML comments and section headers, no real content — the repo has just been cloned from the template. Before any other work, invoke the `bootstrap` skill to draft them together with the user, even if the user hasn't asked for it by name. If you are not Claude Code and no skill auto-loads, read `.claude/skills/bootstrap/SKILL.md` and run its steps manually — it is written as a plain procedure, not Claude-specific magic.
 
 The bootstrap skill runs a three-part interview (mission → tech-stack → first initiative) and produces the filled-in constitution plus the first initiative folder. It then sets the project's license (asking which — it does not default to MIT), rewrites the template `README.md` into a short project README that points at the constitution, and suggests committing before any phase begins. Only after all three are approved does the workflow below apply.
 
@@ -49,7 +49,7 @@ Identify the initiative first: ask the user which one, then read `specs/initiati
 
 1. **Branch from a clean tree.** Commit or stash pending changes, then branch `<initiative-name>/<phase-name>`.
 2. **Record intent.** On the branch, add a couple of bullets under the phase in the initiative's `roadmap.md` — what and why. This is the whole spec: no trio.
-3. **Build.** Apply the coding discipline in `.claude/skills/coding-discipline/SKILL.md`. Implement in small commits and add tests where behavior changes (see the testing convention below). No spec-approval gate — the door-test call already was it, with two standing exceptions:
+3. **Build.** Load the coding discipline before writing code — in Claude Code, invoke the `coding-discipline` skill via the Skill tool (a passive reference does not put it in context); other agents read `.claude/skills/coding-discipline/SKILL.md`. Implement in small commits and add tests where behavior changes (see the testing convention below). No spec-approval gate — the door-test call already was it, with two standing exceptions:
    - **Re-classify if the door changes.** If a one-way-door trigger surfaces mid-build (a migration, a delete, a public surface), stop *before* the irreversible step and escalate the remaining work.
    - **Confirm irreversible side effects.** Before executing an irreversible external side effect (deleting data or resources, sending messages, calling a paid API, running a migration against real data), get an explicit go from the user — silence is not consent. Pure source changes on the branch need no such confirm.
 4. **Land it.** Open a PR, or solo, fast-forward `main`. Then check the phase off in `roadmap.md`.
@@ -73,7 +73,7 @@ This section applies to the **escalated path**. On the light path there is no `p
 
 Work task group by task group from `plan.md`. Commit in small increments tied to task groups. When a group is done, run the checks in `validation.md`.
 
-Apply the coding discipline in `.claude/skills/coding-discipline/SKILL.md` while implementing: surface assumptions before coding, keep changes minimal and surgical, and turn each task into a verifiable check before writing it.
+Load the coding discipline at the start of implementation and apply it throughout — in Claude Code, invoke the `coding-discipline` skill via the Skill tool so the guardrails are actually in context (a passive reference does not load them); other agents read `.claude/skills/coding-discipline/SKILL.md`. It means: surface assumptions before coding, keep changes minimal and surgical, and turn each task into a verifiable check before writing it.
 
 **Validation principle:** The agent runs every automated check it can — tests, lint, type checks, CLI smoke tests — and reports the results. Only after exhausting automated validation does it ask the human to step in. The human's role is to review the agent's report, perform the checks only a human can (visual UI, business logic judgment, accessibility), and then authorize the commit or PR push. That authorization is the explicit gate.
 

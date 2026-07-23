@@ -25,7 +25,7 @@ Then take the matching path below.
 
 1. **Branch from a clean tree.** Commit or stash pending changes first (the clean-tree rule in `AGENTS.md`), then create `<initiative-name>/<phase-name>`.
 2. **Record intent.** On the branch, add a couple of bullets under the phase in the initiative's `roadmap.md` — what and why. That is the whole spec; no trio, no separate file.
-3. **Hand off to build.** Follow the Light path in `AGENTS.md`: apply the coding discipline, re-classify and escalate if a one-way-door trigger surfaces mid-build, and get explicit confirmation before any irreversible external side effect. There is no spec-approval gate otherwise. Stop here; this skill is done.
+3. **Hand off to build.** Follow the Light path in `AGENTS.md`: invoke the `coding-discipline` skill (via the Skill tool) before writing code so its guardrails are actually in context, re-classify and escalate if a one-way-door trigger surfaces mid-build, and get explicit confirmation before any irreversible external side effect. There is no spec-approval gate otherwise. Stop here; this skill is done.
 
 ## Escalated path (one-way door)
 

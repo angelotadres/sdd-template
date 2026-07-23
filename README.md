@@ -6,7 +6,7 @@ A GitHub template for **developers working with agents**, built around **spec-dr
 - **Bootstrap skill** — drafts the project's constitution (mission, tech stack, first initiative) on a fresh repo, or documents an existing one.
 - **Per-initiative roadmaps** — multiple people, each driving their own agent, can work in parallel without colliding on the constitution.
 - **Phase-sized work** — phases are closed increments that fit one agent context window; no stub-then-finish pairs.
-- **Agent-agnostic** — the workflow lives in `AGENTS.md`, so any agent or IDE that reads it (Claude Code, Cursor, Codex, etc.) works the same way.
+- **Agent-agnostic workflow** — the rules live in `AGENTS.md`, so any agent or IDE that reads it (Claude Code, Cursor, Codex, etc.) can follow the same workflow. The automation ships as Claude Code skills (`bootstrap`, `feature-spec`, `coding-discipline`); other agents run the same steps by reading those skill files directly — each is written as a plain procedure, not Claude-specific magic.
 
 ## Prerequisites
 

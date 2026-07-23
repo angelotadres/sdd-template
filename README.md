@@ -11,6 +11,7 @@ A GitHub template for **developers working with agents**, built around **spec-dr
 ## Prerequisites
 
 - [GitHub CLI](https://cli.github.com/) (`gh`) — required for issue tracking. Run `gh auth login` after installing.
+- **MCP servers** (optional) — `.mcp.json` pre-wires Context7 (live library docs), the GitHub server, and Playwright. Claude Code auto-loads it; the GitHub server needs a `GITHUB_PAT` in your environment. Remove any server a project doesn't need.
 
 ## Quick start
 
@@ -38,7 +39,7 @@ The `feature-spec` skill reads the initiative's roadmap and runs the **two-way-d
 
 To adopt this workflow in an existing repo:
 
-1. Copy the following into your project root: `AGENTS.md`, `CLAUDE.md`, `.claude/`, and the `specs/` folder (without the scaffold content — just the structure).
+1. Copy the following into your project root: `AGENTS.md`, `CLAUDE.md`, `.claude/`, `.mcp.json`, and the `specs/` folder (without the scaffold content — just the structure).
 2. Run `gh auth login` if needed.
 3. Run the bootstrap skill — it will interview you about your existing project and fill in the constitution based on what's already built, not what you're starting from scratch.
 
@@ -72,46 +73,29 @@ From there, `Start the next phase of <initiative>` runs the `feature-spec` skill
 - **`.claude/skills/bootstrap/`** — interviews you to draft the constitution and first initiative on a fresh repo.
 - **`.claude/skills/feature-spec/`** — automates new-phase kickoff (constitution consult + spec trio generation).
 - **`.claude/skills/coding-discipline/`** — behavioral guardrails applied while implementing a phase (think before coding, simplicity first, surgical changes, verifiable goals), derived from [Andrej Karpathy's observations on LLM coding pitfalls](https://x.com/karpathy/status/2015883857489522876).
+- **`.mcp.json`** — pre-wired MCP servers (Context7, GitHub, Playwright); edit to taste.
 - **`LICENSE`**, **`.gitignore`** — standard project hygiene.
 
 ## Who this is for
 
-This template is for developers who build with agents — one person per feature, driving an agent, whether working solo or alongside others. Nothing stops several people from sharing the repo; there's just no team-coordination machinery beyond git and PRs. The documentation is written primarily for agents to consume — humans benefit too, but the structure is deliberately machine-readable so agents can pick up context without being told what to read.
+For developers who build with agents — one person per feature, driving an agent, solo or alongside others. Sharing the repo works, but there's no team-coordination machinery beyond git and PRs. The docs are written primarily for agents to consume, so they can pick up context without being told what to read. It is not a team coordination tool, a project management system, or a task-tracker replacement — it is an opinionated repo layout that keeps specs and code honest with each other.
 
-It is not a team coordination tool, a project management system, or a replacement for a task tracker. It is an opinionated repo layout that keeps specs and code honest with each other.
+## Design assumptions & constraints
 
-## Assumptions
+The workflow is frictionless when two assumptions hold, and deliberately constrained where they meet multi-person work:
 
-The template is designed around two assumptions. When they hold, the workflow is frictionless. When they don't, you will feel friction:
+1. **Phases within an initiative are sequential** — one completes before the next starts. Different people or agents can work different initiatives simultaneously, since each lives in its own folder with no file overlap.
+2. **One person owns the constitution** — someone has final authority over `specs/mission.md` and `specs/tech-stack.md`. Because those files are shared, edits from multiple branches will need merge resolution. That friction is intentional: constitution changes are significant and should be visible, not silently merged.
 
-1. **Phases within an initiative are sequential.** One phase completes before the next starts. Different people (or agents) can work on different initiatives simultaneously — each initiative lives in its own folder with no file overlap.
-2. **One person owns the constitution.** Someone has final authority over `specs/mission.md` and `specs/tech-stack.md`. Changes to those files should be deliberate and visible to everyone, not silently merged from a feature branch.
-
-## By design
-
-These are deliberate constraints, not gaps:
-
-**Parallel multi-person work causes merge friction.** The constitution files (`mission.md`, `tech-stack.md`) are shared. Changes to them from multiple branches will require merge resolution. This is intentional — constitution changes are significant and should be visible, not silently merged.
-
-**Team coordination relies on git and PRs.** There is no assignment mechanism, no phase lock, no spec review gate beyond what GitHub PRs provide. For a small team, that is enough. Branch creation signals that someone has claimed a phase; the PR is the review gate.
-
-**The SDD workflow is not a bug tracker.** Simple bugs and polish items belong in GitHub Issues, not in specs. The only exception: a bug that requires a multi-phase redesign should be treated as a new initiative.
+Coordination relies on git and PRs — no assignment mechanism, no phase lock, no review gate beyond what a PR provides. Branch creation claims a phase; the PR is the gate. For a small team, that's enough.
 
 ## Issue tracking
 
-Non-blocking bugs, polish, and small improvements that surface during implementation go to **GitHub Issues**, not into the spec workflow. The convention:
-
-- The agent notices something worth tracking and surfaces it ("I noticed X — should I file an issue?")
-- The human authorizes
-- The agent creates it: `gh issue create --label bug` or `--label enhancement`
-
-Before starting a new phase, the agent runs `gh issue list` to surface any open issues relevant to the current initiative.
+Non-blocking bugs and polish go to **GitHub Issues**, not the spec workflow — if it needs a spec it's an initiative, if it doesn't it's an issue. The agent surfaces the suggestion, you authorize, and it files with `--label bug` or `--label enhancement`. See `AGENTS.md` for the full convention.
 
 ## Why spec-driven
 
-Specs are durable; code is disposable. When the agent (or the human) changes, the specs don't. This template bakes that assumption into the repo layout so any agent can pick up where another left off.
-
-Specs here are also deliberately short — and deliberately rare. Every spec is an approval gate, and the gate only works if the human actually reads what they approve; a spec too long to read thoroughly gets rubber-stamped, which is worse than no spec at all because it creates the illusion of review. So the template writes a full spec only for one-way-door work, where the record earns its keep. Reversible work skips the trio entirely and leaves a one-line breadcrumb on the roadmap. The skills enforce a brevity budget and surface the riskiest decisions explicitly at approval time, so human attention lands where it matters.
+Specs are durable; code is disposable. When the agent (or the human) changes, the specs don't — so any agent can pick up where another left off. They're also deliberately short and deliberately rare: a spec too long to read gets rubber-stamped, which is worse than no spec, so the template writes a full trio only for one-way-door work and leaves a one-line breadcrumb for everything else.
 
 See `AGENTS.md` for the full workflow.
 
